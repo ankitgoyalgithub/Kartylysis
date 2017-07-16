@@ -9,6 +9,7 @@ class Clients(models.Model):
     client_id = models.AutoField(primary_key=True)
     client_coupon = models.CharField(max_length=255,unique=True)
     phone_number = models.CharField(max_length=20, null=True)
+    logged_in = models.BooleanField(default=False)
 
     def __str__(self):
         return self.client_coupon

@@ -217,8 +217,9 @@ def validateClient(request):
         data = request.data
         client_coupon = data['client_coupon']
         phone_number = data['phone_number']
+	logged_in = data['logged_in']
 
-        tasks = Clients.objects.filter(client_coupon=client_coupon,phone_number=phone_number)
+        tasks = Clients.objects.filter(client_coupon=client_coupon, phone_number=phone_number, logged_in=logged_in)
         serializer = ClientCouponsSerializer(tasks, many=True)
         response_data = {'isValidUser':0,'client_id':0}
 

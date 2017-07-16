@@ -307,7 +307,7 @@ class AdminSerializer(serializers.ModelSerializer):
 class ClientCouponsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clients
-        fields = ('client_coupon','client_id','phone_number')
+        fields = ('client_coupon','client_id','phone_number','logged_in')
 
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -329,7 +329,6 @@ class MessageSerializer(serializers.ModelSerializer):
 		print '***************************************************************************'
 	        print validated_data
 		print '***************************************************************************'
-		print extract(str(validated_data['template']).lower().strip(' ').strip('.').strip(' '), validated_data['name'].strip(' ').strip('.').strip(' '))
                 pro, price = extract(str(validated_data['template']).lower().strip(' ').strip('.').strip(' '), validated_data['name'].strip(' ').strip('.').strip(' '))
 	    elif str(validated_data['template']).lower() == 'flipkart':
 	        pro = validated_data['name'].strip(' ').strip('.').strip(' ')
