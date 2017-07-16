@@ -1,0 +1,41 @@
+<div id="page-wrapper" >
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <a ng-click="viewClients()" class="btn btn-default pull-right">View Clients</a>
+            </div>
+        </div>
+        <br><br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Add Clients</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" ng-show = "showForm">
+                    <form role="form" ng-submit="clientSaveUpdate()">
+                        <div class="form-group">
+                            <label>Enter Client Coupon</label>
+                            <input type="text" class="form-control" required ng-model="client.client_coupon">
+                        </div>
+                        <div class="form-group">
+                            <label>Enter Client Phone Number</label>
+                            <input type="text" class="form-control" required ng-model="client.phone_number">
+                        </div>
+                        <button type="submit" ng-show="editClient" ng-click="clientSaveUpdate('update')" class="btn btn-success">update</button>
+                        <button type="submit" ng-show="addNewClient"  ng-click="clientSaveUpdate('new')" class="btn btn-success">Save</button>
+                        <button type="reset" class="btn btn-default">Reset</button>
+                    </form>
+                </div>
+                <div class="col-md-6 alert alert-success" ng-show="success">
+                    <strong>Success!</strong> {{clientCoupon}} added successfully.
+                </div>
+                <div class="col-md-6 alert alert-danger" ng-show="failure">
+                    <strong>Client save Failed!</strong> Please <a ng-click="resetForm()">retry</a>.
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+</div>

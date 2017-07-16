@@ -1,0 +1,11 @@
+PylysisProject/settings.py
+db.sqlite3
+*.pyc
+media*
+*migrations*
+*pycache*
+static*
+crone_output.log
+*.log
+TRAI/settings.py
+

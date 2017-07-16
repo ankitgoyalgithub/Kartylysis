@@ -1,0 +1,46 @@
+<div id="page-wrapper" >
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <a ng-click="templateSaveUpdate('new')" class="btn btn-default pull-right">Add Template</a>
+                <h1 class="page-header">
+                List of Template
+                <small></small>
+                </h1>
+                
+            </div>
+        </div>
+        <br><br>
+        <div class="panel panel-default">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped  template-table">
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Title</th>
+                            <th>Template</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="template in templates track by template.id">
+                            <td>{{template.company_name}}</td>
+                            <td>{{template.sender_title}}</td>
+                            <td>{{template.template_body}}</td>
+                            <td align="center">
+                                <a ng-click="editTemplate(template)"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></a>
+                                <a ng-click="deleteTemplate(template.id)"><i class="fa fa-times delete" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <span class="pagination-custom"> 
+        <ul class="pagination">
+            <li ng-repeat="i in getNumber(totalPages) track by $index" ><a href="" ng-click="getTemplate($index)">{{$index+1}}</a></li>
+        </ul>
+    </span>
+</div>
