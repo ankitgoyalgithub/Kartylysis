@@ -9,13 +9,10 @@ from rest_framework.decorators import api_view
 from .fcm import Fcm
 from .models import Clients,Templates,Messages,Admin
 from .serializers import ClientCouponsSerializer,TemplateSerializer,MessageSerializer,AdminSerializer
-import base64
-import csv
-import StringIO
-
+import base64, csv, sys,  linecache
+from StringIO import StringIO
 
 def PrintException():
-	logger = logging.getLogger('myfile')
 	exc_type, exc_obj, tb = sys.exc_info()
 	f = tb.tb_frame
 	lineno = tb.tb_lineno
@@ -23,10 +20,7 @@ def PrintException():
 	linecache.checkcache(filename)
 	line = linecache.getline(filename, lineno, f.f_globals)
 	msg = ('EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj))
-	logger.error("Inside Print Exception Function")
 	print msg
-	logger.error(msg)
-
 
 #Export to csv with filters
 @api_view(['GET'])
@@ -97,7 +91,7 @@ def uploadClientCSVData(request):
         data = request.data
         base64_string = data['base64EncodedCSV']
         csv_string = base64.b64decode(base64_string)
-        f = StringIO.StringIO(csv_string)
+        f = StringIO(csv_string)
         reader = csv.reader(f, delimiter=',', dialect=csv.excel_tab)
         index = 0
         rowInserted = 0
@@ -212,21 +206,35 @@ def validateAdmin(request):
 #Validate client token
 @api_view(['POST'])
 def validateClient(request):
-    if request.method == 'POST':
+    try:
+        if request.method == 'POST':
 
-        data = request.data
-        client_coupon = data['client_coupon']
-        phone_number = data['phone_number']
-	logged_in = data['logged_in']
+            data = request.data
+            client_coupon = data['client_coupon']
+            phone_number = data['phone_number']
+	    logged_in = data['logged_in']
 
-        tasks = Clients.objects.filter(client_coupon=client_coupon, phone_number=phone_number, logged_in=logged_in)
-        serializer = ClientCouponsSerializer(tasks, many=True)
-        response_data = {'isValidUser':0,'client_id':0}
+            tasks = Clients.objects.filter(client_coupon=client_coupon, phone_number=phone_number)
+	    print '**************************************************'
+	    print tasks
+	    print '**************************************************'
+	    if tasks:
+		task = tasks[0]
+	        task.logged_in = True
+	        task.save()
+            serializer = ClientCouponsSerializer(tasks, many=True)
+	    print '**************************************************'
+            print serializer.data
+            print '**************************************************'
+            response_data = {'isValidUser':0,'client_id':0}
 
-        if len(serializer.data) > 0 :
-            response_data['isValidUser'] = 1
-            response_data['client_id'] = serializer.data[0]['client_id']
-        return JsonResponse(response_data, safe=False)
+            if len(serializer.data) > 0 :
+                response_data['isValidUser'] = 1
+                response_data['client_id'] = serializer.data[0]['client_id']
+	    print response_data
+            return JsonResponse(response_data, safe=False)
+    except Exception as e:
+	PrintException()
 
 # Get Post Templates
 class TemplateViewSet(viewsets.ModelViewSet):
