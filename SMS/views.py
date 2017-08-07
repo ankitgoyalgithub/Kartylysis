@@ -69,7 +69,16 @@ def exportMessageToCSV(request):
             [message['client_coupon'], message['company_name'], message['message_time'], message['message'], message['date'],  message['time'], message['vendor'], message['name'], message['orderId'],
              message['sender'],message['amount']])
 
+#Export to csv
+@api_view(['GET'])
+def getResteredUserCount(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="Messages.csv"'
+
+    a = Clients.objects.filter(logged_in=1).count
+    print a
     return response
+
 #Update Client
 @api_view(['POST'])
 def updateClient(request):

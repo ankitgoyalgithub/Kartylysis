@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^getTemplateMessages/$', views.getTemplateMessages),
     url(r'^exportMessageToCSV/$', views.exportMessageToCSV),
     url(r'^exportMessageToCSVWithFilters/$', views.exportMessageToCSVWithFilter),
+    url(r'^getRegisteredCount/$', views.getResteredUserCount)
 
 ]
 urlpatterns += router.urls
