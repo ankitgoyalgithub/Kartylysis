@@ -65,7 +65,7 @@ def exportMessageToCSV(request):
 
 #Export to csv
 @api_view(['GET'])
-def getResteredUserCount(request):
+def getRegisteredUserCount(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="Messages.csv"'
 
